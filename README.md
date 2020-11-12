@@ -41,3 +41,12 @@ The site address:
 ```
 http://127.0.0.1:3000/
 ```
+
+### You can run only the clint view server by running:
+```
+npm run serve
+```
+the view serve address is:
+```
+http://127.0.0.1:8080/
+```
