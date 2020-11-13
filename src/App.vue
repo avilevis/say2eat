@@ -56,7 +56,7 @@ export default {
         body: JSON.stringify(this.empty_weekdays_picker)
       }
       let self = this
-      fetch("http://127.0.0.1:3000/new", requestOptions)
+      fetch("http://127.0.0.1:3000/api", requestOptions)
           .then(response => response.json())
           .then(data => {
             self.weekdays_picker_array.push(data)
@@ -65,7 +65,7 @@ export default {
     },
     patchWeekdays(id, field, value){
       let requestOptions = {
-        method: "POST",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
@@ -76,7 +76,7 @@ export default {
           value: value
         })
       }
-      fetch("http://127.0.0.1:3000/patch", requestOptions)
+      fetch("http://127.0.0.1:3000/api", requestOptions)
           .then(response => response.json())
           .then(() => {
             console.log("data been changed")
@@ -105,7 +105,7 @@ export default {
           id: weekdaysPickerId,
         })
       }
-      fetch("http://127.0.0.1:3000/", requestOptions)
+      fetch("http://127.0.0.1:3000/api", requestOptions)
           .then(response => response.json())
           .then(() => {
             let index = self.weekdays_picker_array.findIndex((obj)=>obj.id == weekdaysPickerId)
