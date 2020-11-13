@@ -23,6 +23,7 @@
           class="col"
           name="open-time"
           placeholder="Open time"
+          :moshe="times.open"
           :value="times.open"
           :disabled="times.allDay"
           @change="updateTime($event,'open')">

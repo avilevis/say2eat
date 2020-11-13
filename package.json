@@ -21,7 +21,8 @@
     "morgan": "~1.9.1",
     "postgres": "^1.0.2",
     "vue": "^3.0.2",
-    "vue2-timepicker": "^1.1.5"
+    "vue2-timepicker": "^1.1.5",
+    "moment": "~2.29.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

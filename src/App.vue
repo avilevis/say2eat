@@ -19,6 +19,9 @@
 <script>
 export default {
   name: 'App',
+  created() {
+    this.getWeekdays()
+  },
   data() {
     return {
       empty_weekdays_picker:{
@@ -44,7 +47,7 @@ export default {
   components: {},
   methods: {
     addWeekDaysPicker(){
-      const requestOptions = {
+      let requestOptions = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,13 +59,12 @@ export default {
       fetch("http://127.0.0.1:3000/new", requestOptions)
           .then(response => response.json())
           .then(data => {
-            console.log("data:", data)
             self.weekdays_picker_array.push(data)
           })
           .catch((err)=>console.log(err))
     },
     patchWeekdays(id, field, value){
-      const requestOptions = {
+      let requestOptions = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,8 +94,41 @@ export default {
       this.patchWeekdays(weekdaysPickerId, activity, value)
     },
     deleteComponent(weekdaysPickerId) {
-      console.warn(`component ${weekdaysPickerId} del`)
+      let self = this
+      let requestOptions = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          id: weekdaysPickerId,
+        })
+      }
+      fetch("http://127.0.0.1:3000/", requestOptions)
+          .then(response => response.json())
+          .then(() => {
+            let index = self.weekdays_picker_array.findIndex((obj)=>obj.id == weekdaysPickerId)
+            self.weekdays_picker_array.splice(index, 1)
+          })
+          .catch((err)=>alert(err))
     },
+    getWeekdays(){
+      let self = this
+      let requestOptions = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+      fetch("http://127.0.0.1:3000/api", requestOptions)
+          .then(response => response.json())
+          .then((data) => {
+            self.weekdays_picker_array = data
+          })
+          .catch((err)=>alert(err))
+    }
   },
 }
 </script>

@@ -24,11 +24,16 @@ CREATE TABLE public.weekdays_table
     thursday boolean NOT NULL DEFAULT false,
     friday boolean NOT NULL DEFAULT false,
     saturday boolean NOT NULL DEFAULT false,
-    open time without time zone,
-    close time without time zone,
     allday boolean NOT NULL DEFAULT false,
+    open character(5) COLLATE pg_catalog."default" DEFAULT NULL::bpchar,
+    close character(5) COLLATE pg_catalog."default" DEFAULT NULL::bpchar,
     CONSTRAINT weekdays_table_pkey PRIMARY KEY (id)
 )
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.weekdays_table
+    OWNER to postgres;
 ```
 
 ### Running the project

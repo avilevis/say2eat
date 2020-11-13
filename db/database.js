@@ -1,4 +1,5 @@
 const postgres = require('postgres')
+const moment = require('moment')
 const sql = postgres('postgres://username:password@host:port/database', {
         host: '127.0.0.1',
         port: 5432,
@@ -8,7 +9,7 @@ const sql = postgres('postgres://username:password@host:port/database', {
     }
 )
 
-function format_week(db_week){
+const format_week = function (db_week){
     return {
         id: db_week.id,
         days: {
@@ -21,11 +22,16 @@ function format_week(db_week){
             Saturday: db_week.saturday,
         },
         times: {
-            open: db_week.open,
-            close: db_week.close,
+            open: db_week['open'],
+            close: db_week['close'],
             allDay: db_week.allday,
         }
     }
+}
+
+const listWeekdays = async function () {
+    let weeks = await sql`select * from public.weekdays_table order by id`
+    return weeks
 }
 
 const newWeekdays = async function () {
@@ -42,6 +48,10 @@ const updateWeekdays = async function (id, field, value ) {
     return week
 }
 
+const deleteWeekdays = async function ( id ) {
+    let week = await sql`DELETE FROM public.weekdays_table where id = ${ id }`
+    return week
+}
 module.exports = {
-    newWeekdays, updateWeekdays
+    format_week, listWeekdays, newWeekdays, updateWeekdays, deleteWeekdays
 };
